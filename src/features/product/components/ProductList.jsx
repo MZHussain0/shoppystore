@@ -204,23 +204,33 @@ export default function ProductList() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
   const [filter, setFilter] = useState({});
+  const [sort, setSort] = useState({});
 
   const handleFilter = (e, section, option) => {
-    const newFilter = { ...filter, [section.id]: option.value };
-    // console.log("🚀 ~ file: ProductList.jsx:213 ~ newFilter:", newFilter);
+    const newFilter = { ...filter };
+    if (e.target.checked) {
+      if (newFilter[section.id]) {
+        newFilter[section.id].push(option.value);
+      } else {
+        newFilter[section.id] = [option.value];
+      }
+    } else {
+      const index = newFilter[section.id].indexOf(option.value);
+      newFilter[section.id].splice(index, 1);
+    }
     setFilter(newFilter);
-    dispatch(fetchAllProductsByFilterAsync(newFilter));
+    console.log(newFilter);
   };
 
   const handleSort = (e, option) => {
-    const newFilter = { ...filter, _sort: option.sort, _order: option.order };
-    setFilter(newFilter);
-    dispatch(fetchAllProductsByFilterAsync(newFilter));
+    const sort = { _sort: option.sort, _order: option.order };
+    setSort(sort);
+    console.log(sort);
   };
 
   useEffect(() => {
-    dispatch(fetchAllProductsAsync());
-  }, [dispatch]);
+    dispatch(fetchAllProductsByFilterAsync({ filter, sort }));
+  }, [dispatch, filter, sort]);
 
   return (
     <div>

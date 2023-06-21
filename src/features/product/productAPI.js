@@ -8,14 +8,26 @@ export function fetchAllProducts() {
   });
 }
 
-export function fetchAllProductsByFilters(filter) {
+export function fetchAllProductsByFilters(filter, sort) {
   // filter = {"category": "electronics"}
-  // TODO: support multiple filters
+  // TODO: support multiple filters later
   let queryString = "";
+
   for (let key in filter) {
-    queryString += `${key}=${filter[key]}&`;
+    const categoryValue = filter[key];
+    if (categoryValue.length) {
+      const lastCategoryValue = categoryValue[categoryValue.length - 1];
+      queryString += `${key}=${lastCategoryValue}&`;
+    }
   }
+
+  for (let key in sort) {
+    const sortValue = sort[key];
+    queryString += `${key}=${sortValue}&`;
+  }
+
   return new Promise(async (resolve) => {
+    console.log(queryString);
     const response = await fetch(
       `http://localhost:8080/products?${queryString}`
     );
