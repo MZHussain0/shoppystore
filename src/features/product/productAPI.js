@@ -8,8 +8,10 @@ export function fetchAllProducts() {
   });
 }
 
-export function fetchAllProductsByFilters(filter, sort) {
+export function fetchAllProductsByFilters(filter, sort, pagination) {
   // filter = {"category": "electronics"}
+  // sort={_sort: "price", _order: "asc"}
+  // pagination={_page: 1, _limit: 10}
   // TODO: support multiple filters later
   let queryString = "";
 
@@ -25,6 +27,9 @@ export function fetchAllProductsByFilters(filter, sort) {
     const sortValue = sort[key];
     queryString += `${key}=${sortValue}&`;
   }
+  for (let key in pagination) {
+    queryString += `${key}=${pagination[key]}&`;
+  }
 
   return new Promise(async (resolve) => {
     console.log(queryString);
@@ -32,6 +37,7 @@ export function fetchAllProductsByFilters(filter, sort) {
       `http://localhost:8080/products?${queryString}`
     );
     const data = await response.json();
-    resolve({ data });
+    const totalItems = await response.headers.get("x-total-count");
+    resolve({ data: { products: data, totalItems: totalItems } });
   });
 }
