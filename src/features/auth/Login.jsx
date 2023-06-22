@@ -1,22 +1,23 @@
 import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import { useSelector, useDispatch } from "react-redux";
-import { increment, incrementAsync, selectCount } from "./authSlice";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+import { loginUserAsync, selectError, selectLoggedInUser } from "./authSlice";
 
 export default function Login() {
-  const count = useSelector(selectCount);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
   const dispatch = useDispatch();
+  const loginError = useSelector(selectError);
+  const user = useSelector(selectLoggedInUser);
 
   return (
     <>
-      {/*
-        This example requires updating your template:
-
-        ```
-        <html class="h-full bg-white">
-        <body class="h-full">
-        ```
-      */}
+      {user && <Navigate to="/" replace={true} />}
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
@@ -30,7 +31,14 @@ export default function Login() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" action="#" method="POST">
+          <form
+            className="space-y-6"
+            noValidate
+            onSubmit={handleSubmit((data) =>
+              dispatch(
+                loginUserAsync({ email: data.email, password: data.password })
+              )
+            )}>
             <div>
               <label
                 htmlFor="email"
@@ -40,15 +48,14 @@ export default function Login() {
               <div className="mt-2">
                 <input
                   id="email"
-                  name="email"
+                  {...register("email", {
+                    required: "Email is required",
+                  })}
                   type="email"
-                  autoComplete="email"
-                  required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
-
             <div>
               <div className="flex items-center justify-between">
                 <label
@@ -67,15 +74,19 @@ export default function Login() {
               <div className="mt-2">
                 <input
                   id="password"
-                  name="password"
                   type="password"
-                  autoComplete="current-password"
-                  required
+                  {...register("password", {
+                    required: "Password is required",
+                  })}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
+                {loginError && (
+                  <p className="mt-2 text-sm text-red-600">
+                    <strong>{loginError.message}</strong>
+                  </p>
+                )}
               </div>
             </div>
-
             <div>
               <button
                 type="submit"
