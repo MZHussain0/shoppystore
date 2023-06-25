@@ -1,3 +1,5 @@
+import { fetchItemsByUserIdAsync } from "./cartSlice";
+
 export function addToCart(item) {
   return new Promise(async (resolve) => {
     const response = await fetch("http://localhost:8080/cart", {
@@ -38,5 +40,18 @@ export function fetchItemsByUserId(userId) {
     const response = await fetch("http://localhost:8080/cart?user=" + userId);
     const data = await response.json();
     resolve({ data });
+  });
+}
+
+export async function resetCart(userId) {
+  // get all items of user's cart - delete each item
+  return new Promise(async (resolve) => {
+    const response = await fetchItemsByUserId(userId);
+    const items = response.data;
+
+    for (const item of items) {
+      await deleteItemsFromCart(item.id);
+    }
+    resolve({ status: "success" });
   });
 }
