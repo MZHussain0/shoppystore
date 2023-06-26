@@ -19,9 +19,10 @@ export function loginUser(userData) {
     const data = await response.json();
 
     if (data.length) {
-      if (data[0].password === password) {
-        resolve({ data: data[0] });
+      if (data[4].password === password) {
+        resolve({ data: data[4] });
       } else {
+        console.log(data[4]);
         reject({ message: "Wrong Credentials" });
       }
     } else {

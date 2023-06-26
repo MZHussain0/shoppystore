@@ -60,6 +60,9 @@ const UserProfile = () => {
       <div className=" mt-8 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <h2 className="text-xl font-semibold pt-4">Name: {user.name}</h2>
         <h3 className="text-xl font-semibold">Email : {user.email}</h3>
+        {user.role === "admin" && (
+          <h3 className="text-xl font-semibold">Role : {user.role}</h3>
+        )}
       </div>
 
       <div className="border-t border-gray-200 px-4 py-6 sm:px-6">

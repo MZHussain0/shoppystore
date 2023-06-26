@@ -1838,6 +1838,24 @@
         "https://i.dummyjson.com/data/products/100/3.jpg",
         "https://i.dummyjson.com/data/products/100/thumbnail.jpg"
       ]
+    },
+    {
+      "title": "Phone Phone",
+      "description": "Best Phone",
+      "price": "999",
+      "discountPercentage": "1",
+      "stock": "1",
+      "category": "smartphones",
+      "brand": "Apple",
+      "thumbnail": "https://images.unsplash.com/photo-1513611771808-7e8ab7f1dec6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGhvbmVzfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60",
+      "images": [
+        "https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cGhvbmVzfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60",
+        "https://plus.unsplash.com/premium_photo-1681302547882-e26efde7f7b3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cGhvbmVzfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60",
+        "https://images.unsplash.com/photo-1560209617-059c0bd661ba?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHBob25lc3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60",
+        "https://images.unsplash.com/photo-1513611771808-7e8ab7f1dec6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGhvbmVzfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+      ],
+      "rating": 0,
+      "id": 101
     }
   ],
   "brands": [
@@ -2338,6 +2356,7 @@
     {
       "email": "test@gmail.com",
       "password": "T123456t",
+      "role": "user",
       "addresses": [
         {
           "name": "zakir hussains",
@@ -2363,14 +2382,30 @@
     {
       "email": "demo@gmail.com",
       "password": "T123456t",
+      "role": "user",
       "addresses": [],
       "id": 2
     },
     {
       "email": "demo@gmail.com",
       "password": "T123123t",
+      "role": "user",
       "addresses": [],
       "id": 3
+    },
+    {
+      "email": "admin@gmail.com",
+      "password": "T123123t",
+      "addresses": [],
+      "role": "admin",
+      "id": 4
+    },
+    {
+      "email": "admin@gmail.com",
+      "password": "Q121212q",
+      "addresses": [],
+      "role": "admin",
+      "id": 5
     }
   ],
   "cart": [
@@ -2390,23 +2425,6 @@
       "quantity": 1,
       "user": 3,
       "id": 1
-    },
-    {
-      "title": "Samsung Universe 9",
-      "description": "Samsung's new variant which goes beyond Galaxy to the Universe",
-      "price": 1249,
-      "discountPercentage": 15.46,
-      "rating": 4.09,
-      "stock": 36,
-      "brand": "Samsung",
-      "category": "smartphones",
-      "thumbnail": "https://i.dummyjson.com/data/products/3/thumbnail.jpg",
-      "images": [
-        "https://i.dummyjson.com/data/products/3/1.jpg"
-      ],
-      "quantity": 1,
-      "user": 1,
-      "id": 2
     }
   ],
   "orders": [
