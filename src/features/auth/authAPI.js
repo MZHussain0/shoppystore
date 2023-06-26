@@ -29,3 +29,9 @@ export function loginUser(userData) {
     }
   });
 }
+
+export function signOut() {
+  return new Promise(async (resolve) => {
+    resolve({ data: "success" });
+  });
+}

@@ -79,6 +79,13 @@ export default function Signup() {
                   className="block text-sm font-medium leading-6 text-gray-900">
                   Password
                 </label>
+                <div className="text-sm">
+                  <Link
+                    to="/resetPassword"
+                    className="font-medium text-indigo-600 hover:text-indigo-500">
+                    Forgot Password ?
+                  </Link>
+                </div>
               </div>
               <div className="mt-2">
                 <input
