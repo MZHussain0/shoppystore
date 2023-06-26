@@ -4,14 +4,12 @@ import Cart from "../features/cart/Cart";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCart } from "../features/cart/cartSlice";
 import { set, useForm } from "react-hook-form";
-import {
-  selectLoggedInUser,
-  updateUserAsync,
-} from "../features/auth/authSlice";
+import { updateUserAsync } from "../features/auth/authSlice";
 import {
   createOrderAsync,
   selectCurrentOrder,
 } from "../features/order/orderSlice";
+import { selectUserInfo } from "../features/profile/profileSlice";
 
 const CheckoutPage = () => {
   const {
@@ -22,7 +20,7 @@ const CheckoutPage = () => {
   } = useForm();
 
   const dispatch = useDispatch();
-  const user = useSelector(selectLoggedInUser);
+  const user = useSelector(selectUserInfo);
   const items = useSelector(selectCart);
   const currentOrder = useSelector(selectCurrentOrder);
 

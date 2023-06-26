@@ -6,7 +6,6 @@ import {
   resetCart,
   updateCart,
 } from "./cartAPI";
-import { fetchProductByIdAsync } from "../product/productSlice";
 
 const initialState = {
   items: [],
