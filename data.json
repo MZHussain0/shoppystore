@@ -2489,7 +2489,7 @@
         "state": "karnataka",
         "zip": "585104"
       },
-      "status": "pending",
+      "status": "dispatched",
       "id": 1
     },
     {
@@ -2552,7 +2552,7 @@
         "state": "karnataka",
         "zip": "585104"
       },
-      "status": "pending",
+      "status": "delivered",
       "id": 2
     },
     {
@@ -2615,7 +2615,7 @@
         "state": "karnataka",
         "zip": "585104"
       },
-      "status": "pending",
+      "status": "cancelled",
       "id": 3
     },
     {

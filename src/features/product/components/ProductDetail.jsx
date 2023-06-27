@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchProductByIdAsync, selectedProduct } from "../productSlice";
 import { useParams } from "react-router-dom";
 import { selectLoggedInUser } from "../../auth/authSlice";
-import { addToCartAsync } from "../../cart/cartSlice";
+import { addToCartAsync, selectCart } from "../../cart/cartSlice";
 
 const colors = [
   { name: "White", class: "bg-white", selectedClass: "ring-gray-400" },
@@ -36,6 +36,7 @@ function classNames(...classes) {
 export default function ProductDetail() {
   const product = useSelector(selectedProduct);
   const user = useSelector(selectLoggedInUser);
+  const items = useSelector(selectCart);
   const [selectedColor, setSelectedColor] = useState(colors[0]);
   const [selectedSize, setSelectedSize] = useState(sizes[2]);
   // TODO: In server we will add sizes , colors , highlights etc
@@ -187,7 +188,7 @@ export default function ProductDetail() {
                     onChange={setSelectedSize}
                     className="mt-4">
                     <RadioGroup.Label className="sr-only">
-                      Choose a size
+                      Choose a size const items = useSelector(selectCart)
                     </RadioGroup.Label>
                     <div className="grid grid-cols-4 gap-4 sm:grid-cols-8 lg:grid-cols-4">
                       {sizes &&
