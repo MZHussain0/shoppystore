@@ -1,22 +1,65 @@
 ﻿import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  clearSelectedProduct,
   createProductAsync,
+  fetchProductByIdAsync,
   selectAllBrands,
   selectAllCategories,
+  selectedProduct,
+  updateProductAsync,
 } from "../../product/productSlice";
 import { useForm } from "react-hook-form";
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 const ProductForm = () => {
   const brands = useSelector(selectAllBrands);
   const categories = useSelector(selectAllCategories);
+  const selProduct = useSelector(selectedProduct);
+  console.log("🚀 ~ file: ProductForm.jsx:18 ~ product:", selProduct);
+
   const dispatch = useDispatch();
+  const params = useParams();
+
   const {
     register,
     handleSubmit,
+    setValue,
     reset,
     formState: { errors },
   } = useForm();
+
+  useEffect(() => {
+    if (params.id) {
+      dispatch(fetchProductByIdAsync(params.id));
+    } else {
+      dispatch(clearSelectedProduct());
+    }
+  }, [params.id, dispatch]);
+
+  useEffect(() => {
+    if (selProduct && params.id) {
+      setValue("title", selProduct.title);
+      setValue("description", selProduct.description);
+      setValue("price", selProduct.price);
+      setValue("brand", selProduct.brand);
+      setValue("category", selProduct.category);
+      setValue("image1", selProduct.images[0]);
+      setValue("image2", selProduct.images[1]);
+      setValue("image3", selProduct.images[2]);
+      setValue("thumbnail", selProduct.thumbnail);
+      setValue("stock", selProduct.stock);
+      setValue("discountPercentage", selProduct.discountPercentage);
+    }
+  }, [selProduct, setValue, params.id]);
+
+  const handleDelete = () => {
+    const product = { ...selProduct };
+    product.deleted = true;
+    dispatch(updateProductAsync(product));
+  };
+
   return (
     <form
       noValidate
@@ -32,13 +75,24 @@ const ProductForm = () => {
         delete product.image1;
         delete product.image2;
         delete product.image3;
+        product.price = +product.price;
+        product.stock = +product.stock;
+        product.discountPercentage = +product.discountPercentage;
 
-        dispatch(createProductAsync(product));
+        if (params.id) {
+          product.id = params.id;
+          product.rating = selProduct.rating || 0;
+          dispatch(updateProductAsync(product));
+          reset();
+        } else {
+          dispatch(createProductAsync(product));
+          reset();
+        }
       })}>
       <div className="space-y-12 bg-white p-8">
         <div className="border-b border-gray-900/10 pb-12">
           <h2 className="text-3xl font-semibold leading-7 text-gray-900">
-            Add New Product
+            {params.id ? "Edit Product" : "Add Product"}
           </h2>
 
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
@@ -358,10 +412,18 @@ const ProductForm = () => {
           className="text-sm font-semibold leading-6 text-gray-900">
           Cancel
         </button>
+        {selProduct && (
+          <button
+            onClick={() => handleDelete()}
+            className="text-sm font-semibold leading-6 bg-rose-600 rounded-md px-4 py-2 text-white shadow-sm hover:bg-rose-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+            DELETE
+          </button>
+        )}
+
         <button
           type="submit"
-          className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-          Save
+          className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+          SAVE
         </button>
       </div>
     </form>
